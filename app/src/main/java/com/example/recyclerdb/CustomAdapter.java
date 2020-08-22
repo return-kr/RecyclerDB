@@ -5,20 +5,21 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
     private Context context;
     private List<TaskModel> model;
-    int position;
+    Animation animation;
 
 //    private ArrayList t_id, t_name, t_date, t_time, t_detail;
 //
@@ -46,8 +47,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        this.position = position;
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.title.setText(String.valueOf(model.get(position).getName()));
         holder.date.setText(String.valueOf(model.get(position).getDate()));
         holder.time.setText(String.valueOf(model.get(position).getTime()));
@@ -56,7 +56,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, UpdateActivity.class);
-                
+                intent.putExtra("id", String.valueOf(model.get(position).getId()));
+                intent.putExtra("name", String.valueOf(model.get(position).getName()));
+                intent.putExtra("date", String.valueOf(model.get(position).getDate()));
+                intent.putExtra("time", String.valueOf(model.get(position).getTime()));
+                intent.putExtra("detail", String.valueOf(model.get(position).getDetail()));
                 context.startActivity(intent);
             }
         });
@@ -80,6 +84,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             time = itemView.findViewById(R.id.time);
             detail = itemView.findViewById(R.id.detail);
             mainLayout = itemView.findViewById(R.id.mainLayout);
+            animation = AnimationUtils.loadAnimation(context, R.anim.recycler_anim);
+            mainLayout.setAnimation(animation);
         }
     }
 }
