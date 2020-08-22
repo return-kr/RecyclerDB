@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="What To-Do"
+        android:layout_gravity="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:layout_margin="5dp"
+        android:elevation="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task Title:"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:textSize="25sp"
+        android:layout_marginTop="5dp" />
+
+    <EditText
+        android:id="@+id/tName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_stroke"
+        android:padding="10dp"
+        android:hint="Enter Task Name"
+        android:layout_margin="10dp"
+        android:maxLines="1"
+        android:elevation="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task Date:"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:textSize="25sp"
+        android:layout_marginTop="5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/dateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_selector"
+            android:text="Set Date"
+            android:textColor="#ffffff"
+            android:layout_weight=".5"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="20-08-1999"
+            android:background="@drawable/edit_stroke"
+            android:padding="7dp"
+            android:textSize="21sp"
+            android:layout_weight=".5"
+            android:elevation="5dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task Time:"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:textSize="25sp"
+        android:layout_marginTop="5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/timeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_selector"
+            android:text="Set Time"
+            android:textColor="#ffffff"
+            android:layout_weight=".5"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="12 : 24 AM"
+            android:background="@drawable/edit_stroke"
+            android:padding="7dp"
+            android:textSize="21sp"
+            android:layout_weight=".5"
+            android:elevation="5dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task Details:"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:id="@+id/tDetails"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/edit_stroke"
+        android:padding="10dp"
+        android:hint="Enter Task Name"
+        android:textStyle="italic"
+        android:layout_margin="10dp"
+        android:elevation="5dp"
+        android:maxLines="6"
+        android:gravity="left|top" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/tCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_selector"
+            android:text="Cancel"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_margin="10dp"
+            android:textAllCaps="false"
+            android:layout_weight=".5"
+            android:elevation="5dp" />
+
+        <Button
+            android:id="@+id/tCreate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_selector"
+            android:text="Create"
+            android:textAllCaps="false"
+            android:layout_margin="10dp"
+            android:textSize="18sp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:layout_weight=".5"
+            android:elevation="5dp" />
+    </LinearLayout>
+
+</LinearLayout>
