@@ -21,7 +21,8 @@
                 android:background="@drawable/edit_stroke"
                 android:layout_margin="5dp"
                 android:elevation="5dp"
-                android:padding="15dp">
+                android:padding="15dp"
+                android:id="@+id/mainLayout">
 
                 <ImageView
                     android:id="@+id/thumbnail"

@@ -1,9 +1,11 @@
 package com.example.recyclerdb;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     private Context context;
     private List<TaskModel> model;
+    int position;
+
 //    private ArrayList t_id, t_name, t_date, t_time, t_detail;
 //
 //    CustomAdapter(Context context, ArrayList t_id, ArrayList t_name, ArrayList t_date, ArrayList t_time, ArrayList t_detail){
@@ -43,10 +47,19 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        this.position = position;
         holder.title.setText(String.valueOf(model.get(position).getName()));
         holder.date.setText(String.valueOf(model.get(position).getDate()));
         holder.time.setText(String.valueOf(model.get(position).getTime()));
         holder.detail.setText(String.valueOf(model.get(position).getDetail()));
+        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, UpdateActivity.class);
+                intent.putExtra("id", String.valueOf())
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -57,6 +70,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView title, date, time, detail;
+        LinearLayout mainLayout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,6 +79,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             date = itemView.findViewById(R.id.date);
             time = itemView.findViewById(R.id.time);
             detail = itemView.findViewById(R.id.detail);
+            mainLayout = itemView.findViewById(R.id.mainLayout);
         }
     }
 }
