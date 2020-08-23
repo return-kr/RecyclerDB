@@ -7,13 +7,15 @@ public class TaskModel {
     private String date;
     private String time;
     private String detail;
+    private byte[] image;
 
-    public TaskModel(String id, String name, String date, String time, String detail) {
+    public TaskModel(String id, String name, String date, String time, String detail, byte[] image) {
         this.id = id;
         this.name = name;
         this.date = date;
         this.time = time;
         this.detail = detail;
+        this.image = image;
     }
 
     public String getId() {
@@ -54,5 +56,13 @@ public class TaskModel {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

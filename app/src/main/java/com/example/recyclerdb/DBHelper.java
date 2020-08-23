@@ -20,6 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_DATE = "tDate";
     private static final String COLUMN_TIME = "tTime";
     private static final String COLUMN_DETAIL = "tDetail";
+    private static final String COLUMN_IMAGE = "tImage";
 
     public DBHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -33,7 +34,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 COLUMN_NAME + " TEXT, " +
                 COLUMN_DATE + " TEXT, " +
                 COLUMN_TIME + " TEXT, " +
-                COLUMN_DETAIL + " TEXT);";
+                COLUMN_DETAIL + " TEXT, " +
+                COLUMN_IMAGE + " BLOB);";
         db.execSQL(query);
     }
 
@@ -43,13 +45,14 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    void addTask(String name, String date, String time, String detail) {
+    void addTask(String name, String date, String time, String detail, byte[] image) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME, name);
         cv.put(COLUMN_DATE, date);
         cv.put(COLUMN_TIME, time);
         cv.put(COLUMN_DETAIL, detail);
+        cv.put(COLUMN_IMAGE, image);
         long result = db.insert(TABLE_NAME, null, cv);
         if (result == -1) {
             Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
@@ -68,13 +71,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    void updateData(String id, String name, String date, String time, String detail) {
+    void updateData(String id, String name, String date, String time, String detail, byte[] image) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME, name);
         cv.put(COLUMN_DATE, date);
         cv.put(COLUMN_TIME, time);
         cv.put(COLUMN_DETAIL, detail);
+        cv.put(COLUMN_IMAGE, image);
 
         long result = db.update(TABLE_NAME, cv, "_id=?", new String[]{id});
         if (result == -1)

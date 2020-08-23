@@ -6,15 +6,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class UpdateActivity extends AppCompatActivity {
 
     TextView name, date, time, detail;
     Button update, delete;
+    ImageView imageView;
 
     String edName, edID;
 
@@ -27,6 +30,7 @@ public class UpdateActivity extends AppCompatActivity {
         date = findViewById(R.id.viewDate);
         time = findViewById(R.id.viewTime);
         detail = findViewById(R.id.viewDetail);
+        imageView = findViewById(R.id.viewImage);
 
         update = findViewById(R.id.viewEditBtn);
         delete = findViewById(R.id.viewDelBtn);
@@ -38,6 +42,7 @@ public class UpdateActivity extends AppCompatActivity {
         final String Date = intent.getStringExtra("date");
         final String Time = intent.getStringExtra("time");
         final String Detail = intent.getStringExtra("detail");
+        final Bitmap Image = (Bitmap) intent.getParcelableExtra("image");
 
         edName = Name;
         edID = id;
@@ -46,6 +51,7 @@ public class UpdateActivity extends AppCompatActivity {
         date.setText(Date);
         time.setText(Time);
         detail.setText(Detail);
+        imageView.setImageBitmap(Image);
 
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -60,6 +66,7 @@ public class UpdateActivity extends AppCompatActivity {
                 i.putExtra("date", Date);
                 i.putExtra("time", Time);
                 i.putExtra("detail", Detail);
+                i.putExtra("image", Image);
                 startActivity(i);
                 finish();
             }
