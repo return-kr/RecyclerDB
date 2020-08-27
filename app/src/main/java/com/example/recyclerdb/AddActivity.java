@@ -34,8 +34,8 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
     ImageView imageView;
     TextView tDate, tTime;
     Button dateBtn, timeBtn, tCancel, tCreate, imgBtn;
-    int tHour, tMint;
-    String enTime, enDate;  // Final Date and Time picker variables
+    int tHour, tMint, tempDate, tempYear, tempMonth;
+    String enTime, enDate;
 
     final int REQUEST_CODE_GALLERY = 999;
 
@@ -110,7 +110,7 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
     public byte[] imageViewToByte(ImageView image) {
         Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 20, stream);
         return stream.toByteArray();
     }
 
@@ -123,7 +123,10 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
                 calendar.set(Calendar.MINUTE, minute);
                 tHour = hour;
                 tMint = minute;
-                enTime = hour + " : " + minute + "";
+                if (minute < 10)
+                    enTime = hour + ":" + "0" + minute;
+                else
+                    enTime = hour + ":" + minute;
                 tTime.setText(enTime);
             }
         };
@@ -145,7 +148,18 @@ public class AddActivity extends AppCompatActivity implements DatePickerDialog.O
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int date) {
-        enDate = date + "/" + (month + 1) + "/" + year + "";
+        tempYear = year;
+        tempDate = date;
+        tempMonth = month;
+        if (date < 10 && month < 10)
+            enDate = "0" + date + "/" + "0" + (month + 1) + "/" + year;
+        else if (date < 10 || month < 10) {
+            if (date < 10)
+                enDate = "0" + date + "/" + (month + 1) + "/" + year;
+            if (month < 10)
+                enDate = date + "/" + "0" + (month + 1) + "/" + year;
+        } else
+            enDate = date + "/" + (month + 1) + "/" + year;
         tDate.setText(enDate);
     }
 

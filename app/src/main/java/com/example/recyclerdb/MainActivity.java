@@ -1,9 +1,15 @@
 package com.example.recyclerdb;
 
+import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,13 +20,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,12 +41,20 @@ public class MainActivity extends AppCompatActivity {
     ImageView img;
     TextView txt;
 
-//    ArrayList<String> t_id, t_name, t_date, t_time, t_detail;
+    int id_no;
+    String tempName;
+    String tempDetail;
+    String channelId;
+    String tempDate;
+    String tempTime;
+    String stringDate;
+    Date fDate, cDate;
 
     private List<TaskModel> model = new ArrayList<>();
 
     CustomAdapter customAdapter;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,22 +66,14 @@ public class MainActivity extends AppCompatActivity {
         txt = findViewById(R.id.notData);
 
         db = new DBHelper(MainActivity.this);
-
-//        t_id = new ArrayList<>();
-//        t_name = new ArrayList<>();
-//        t_date = new ArrayList<>();
-//        t_time = new ArrayList<>();
-//        t_detail = new ArrayList<>();
-
-        //customAdapter = new CustomAdapter(MainActivity.this, t_id, t_name, t_date, t_time, t_detail);
-
         customAdapter = new CustomAdapter(this, model);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
+        customAdapter.notifyDataSetChanged();
         storeDataInArrays();
 
-        customAdapter.notifyDataSetChanged();
+        createNotificationChannel();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +85,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Task Notification";
+            String description = "My Task Description";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("notifyChannel", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
     void storeDataInArrays() {
         Cursor cursor = db.readAllData();
         if (cursor.getCount() == 0) {
@@ -83,21 +106,41 @@ public class MainActivity extends AppCompatActivity {
         } else {
             while (cursor.moveToNext()) {
                 model.add(new TaskModel(
-                        cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getString(4),
+                        id_no = cursor.getInt(0),
+                        tempName = cursor.getString(1),
+                        tempDate = cursor.getString(2),
+                        tempTime = cursor.getString(3),
+                        tempDetail = cursor.getString(4),
                         cursor.getBlob(5))
                 );
-//                t_id.add(cursor.getString(0));
-//                t_name.add(cursor.getString(1));
-//                t_date.add(cursor.getString(2));
-//                t_time.add(cursor.getString(3));
-//                t_detail.add(cursor.getString(4));
+                img.setVisibility(View.GONE);
+                txt.setVisibility(View.GONE);
+                stringDate = tempDate + " " + tempTime;
+                @SuppressLint("SimpleDateFormat")
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                try {
+                    fDate = format.parse(stringDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("channelId", channelId);
+                intent.putExtra("_id", id_no);
+                intent.putExtra("title", tempName);
+                intent.putExtra("date", tempDate);
+                intent.putExtra("time", tempTime);
+                intent.putExtra("detail", tempDetail);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, id_no, intent, 0);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                long timeAtBtnClick = System.currentTimeMillis();
+                cDate = new Date();
+                long timeMillis = fDate.getTime() - cDate.getTime();
+                if (timeMillis <= 0) {
+                    return;
+                }
+                alarmManager.set(AlarmManager.RTC_WAKEUP, timeAtBtnClick + timeMillis, pendingIntent);
             }
-            img.setVisibility(View.GONE);
-            txt.setVisibility(View.GONE);
         }
     }
 

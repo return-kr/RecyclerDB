@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/canvas"
     tools:context=".EditActivity">
 
     <LinearLayout
@@ -28,6 +29,7 @@
             android:background="@drawable/edit_stroke"
             android:padding="10dp"
             android:hint="Enter Task Name"
+            android:textColor="#393939"
             android:layout_margin="10dp"
             android:maxLines="1"
             android:elevation="5dp" />
@@ -66,7 +68,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="20-08-1999"
+                android:text="20/08/1999"
+                android:textColor="#393939"
                 android:background="@drawable/edit_stroke"
                 android:padding="7dp"
                 android:textSize="21sp"
@@ -108,7 +111,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="12 : 24 AM"
+                android:text="12:24 AM"
+                android:textColor="#393939"
                 android:background="@drawable/edit_stroke"
                 android:padding="7dp"
                 android:textSize="21sp"

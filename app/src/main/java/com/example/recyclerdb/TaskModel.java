@@ -2,14 +2,14 @@ package com.example.recyclerdb;
 
 public class TaskModel {
 
-    private String id;
+    private int id;
     private String name;
     private String date;
     private String time;
     private String detail;
     private byte[] image;
 
-    public TaskModel(String id, String name, String date, String time, String detail, byte[] image) {
+    public TaskModel(int id, String name, String date, String time, String detail, byte[] image) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -18,11 +18,11 @@ public class TaskModel {
         this.image = image;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -24,18 +24,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     private List<TaskModel> model;
     Animation animation;
 
-//    private ArrayList t_id, t_name, t_date, t_time, t_detail;
-//
-//    CustomAdapter(Context context, ArrayList t_id, ArrayList t_name, ArrayList t_date, ArrayList t_time, ArrayList t_detail){
-//        this.context = context;
-//        this.t_id = t_id;
-//        this.t_name = t_name;
-//        this.t_date = t_date;
-//        this.t_time = t_time;
-//        this.t_detail = t_detail;
-//    }
-
-
     public CustomAdapter(Context context, List<TaskModel> model) {
         this.context = context;
         this.model = model;

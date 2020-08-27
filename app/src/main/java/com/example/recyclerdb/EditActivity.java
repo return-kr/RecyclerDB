@@ -125,7 +125,7 @@ public class EditActivity extends AppCompatActivity implements DatePickerDialog.
     public byte[] imageViewToByte(ImageView image) {
         Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, stream);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 20, stream);
         return stream.toByteArray();
     }
 
@@ -138,7 +138,10 @@ public class EditActivity extends AppCompatActivity implements DatePickerDialog.
                 calendar.set(Calendar.MINUTE, minute);
                 eHour = hour;
                 eMinute = minute;
-                edTime = hour + " : " + minute + "";
+                if (minute < 10)
+                    edTime = hour + ":" + "0" + minute;
+                else
+                    edTime = hour + ":" + minute;
                 eTime.setText(edTime);
             }
         };
@@ -160,7 +163,15 @@ public class EditActivity extends AppCompatActivity implements DatePickerDialog.
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int date) {
-        edDate = date + "/" + (month + 1) + "/" + year + "";
+        if (date < 10 && month < 10)
+            edDate = "0" + date + "/" + "0" + (month + 1) + "/" + year;
+        else if (date < 10 || month < 10) {
+            if (date < 10)
+                edDate = "0" + date + "/" + (month + 1) + "/" + year;
+            if (month < 10)
+                edDate = date + "/" + "0" + (month + 1) + "/" + year;
+        } else
+            edDate = date + "/" + (month + 1) + "/" + year;
         eDate.setText(edDate);
     }
 
